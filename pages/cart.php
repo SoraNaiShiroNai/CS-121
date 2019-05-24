@@ -120,6 +120,7 @@
                     </thead>
                     <tbody>
 						<?php
+							$totalPrice = 0;
 							$stmt = $db->prepare('SELECT * FROM cart_detail WHERE cart_id=?');
 							$stmt->execute(array($cart_id));
 							$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -158,7 +159,7 @@
 										<td><?php echo $item_price ?></td>
 										<td><input class="form-control" type="text" name = "quantity" value="<?php echo $quantity ?>" /></td>
 										<td class="text-right"><button class="btn btn-sm btn-success" type = "submit" name = "updateQuantity"><i class="fa fa-check"></i> </button> </td>
-										<td class="text-right"><?php $subprice = $quantity*$item_price; echo $subprice ?></td>
+										<td class="text-right"><?php $subprice = $quantity*$item_price; $totalPrice = $totalPrice + $subprice; echo $subprice ?></td>
 								</form>
 								<form method = 'post'>
 									<input type = "text" name = "item_id" value = "<?php echo $item_id ?>" hidden>
@@ -171,26 +172,29 @@
                         <tr>
                             <td></td>
                             <td></td>
+							<td></td>
                             <td></td>
                             <td></td>
                             <td>Sub-Total</td>
-                            <td class="text-right">PHP 2940.00</td>
+                            <td class="text-right">PHP <?php echo $totalPrice ?>.00</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
+							<td></td>
                             <td></td>
                             <td></td>
                             <td>Shipping</td>
-                            <td class="text-right">PHP 150.00</td>
+                            <td class="text-right">PHP 100.00</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
+							<td></td>
                             <td></td>
                             <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>PHP 3090.00</strong></td>
+                            <td class="text-right"><strong>PHP <?php echo ($totalPrice + 100) ?>.00</strong></td>
                         </tr>
                     </tbody>
                 </table>

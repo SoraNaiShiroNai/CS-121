@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2019 at 07:26 PM
+-- Generation Time: May 24, 2019 at 11:00 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -38,7 +38,9 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `email`) VALUES
-(0, 'mirai@nightcore.com');
+(2, 'flonne@disgaea.com'),
+(4, 'sora@disboard.com'),
+(3, 'wobo@gm.com');
 
 -- --------------------------------------------------------
 
@@ -57,7 +59,8 @@ CREATE TABLE `cart_detail` (
 --
 
 INSERT INTO `cart_detail` (`cart_id`, `item_id`, `quantity`) VALUES
-(0, 2, 7);
+(2, 2, 10),
+(2, 5, 51);
 
 -- --------------------------------------------------------
 
@@ -80,8 +83,8 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`item_id`, `item_category_id`, `item_name`, `item_desc`, `item_price`, `item_photo`, `stock`) VALUES
-(2, 0, 'Jufran Ketchup', 'Sweet Chili Ketchup Sauce from fresh Bell Peppers', 80.00, '', 0),
-(3, 0, 'Coca Cola', 'coke zero', 12.00, '', 0);
+(2, 0, 'Jufran Ketchup', 'Sweet Chili Ketchup Sauce from fresh Bell Peppers', 80.00, 'tsuujou-kougeki.jpg', 4),
+(5, 0, 'Cream-O', 'Limited Edition Vanilla Cream-Filled Chocolate Sandwich Cookies', 65.00, '52011404_1022763154576037_1099149974349807616_n.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -127,8 +130,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`email`, `firstname`, `surname`, `default_address`, `phone_number`, `password`) VALUES
-('flonne@disgaea.com', 'Flonne', 'Yuuki', 'The Netherworld', '099123124', 'yuuki'),
-('mirai@nightcore.com', 'Mirai', 'Kuriyama', 'Ueno', '99281512', 'akihito');
+('flonne@disgaea.com', 'Flonne', 'Yuuki', 'disboard', '660123123', 'laharl'),
+('sora@disboard.com', 'Sora', 'Nai', 'Senjougahara', '2981723', 'shiro'),
+('wobo@gm.com', 'Walter', 'Mart', 'BASD', '213123', 'helvette');
 
 --
 -- Indexes for dumped tables
@@ -145,8 +149,8 @@ ALTER TABLE `cart`
 -- Indexes for table `cart_detail`
 --
 ALTER TABLE `cart_detail`
-  ADD UNIQUE KEY `item_id` (`item_id`),
-  ADD KEY `cart_id` (`cart_id`);
+  ADD KEY `cart_id` (`cart_id`),
+  ADD KEY `item_id` (`item_id`);
 
 --
 -- Indexes for table `item`
@@ -180,10 +184,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `order`
@@ -206,7 +216,7 @@ ALTER TABLE `cart`
 --
 ALTER TABLE `cart_detail`
   ADD CONSTRAINT `cart_detail_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`),
-  ADD CONSTRAINT `cart_detail_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`);
+  ADD CONSTRAINT `cart_detail_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order`
