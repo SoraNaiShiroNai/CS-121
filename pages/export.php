@@ -114,14 +114,15 @@ function FancyTable()
 }
 function paymentDetails()
 {
-	
-	$ccn = strip_tags($_POST['ccn']);
-	$name = strip_tags($_POST['name']);
-	$exp = strip_tags($_POST['exp']);
-	$cvc = strip_tags($_POST['cvc']);
 	$pmethod = strip_tags($_POST['pmethod']);
+	$default_address = strip_tags($_POST['default_address']);
+	
 		
-	if($pmethod == "pp"){
+	if($pmethod == "Credit Card: Paypal"){
+		$ccn = strip_tags($_POST['ccn']);
+		$name = strip_tags($_POST['name']);
+		$exp = strip_tags($_POST['exp']);
+		$cvc = strip_tags($_POST['cvc']);
 		$this->Ln(10);
 
 		$this->Cell(40,7,'Payment Method: ',0,0,'L',false);
@@ -139,7 +140,19 @@ function paymentDetails()
 		
 	}
 	else{
-		
+		$this->Ln(10);
+		$this->Cell(40,7,'Payment Method: ',0,0,'L',false);
+		$this->Cell(45,7,'Cash on Delivery',0,0,'L',false);
+		$this->Ln();
+	}
+	$this->Cell(40,7,'Delivery Address: ',0,0,'L',false);
+	$this->Cell(45,7,$default_address,0,0,'L',false);
+	$this->Ln();
+	if($pmethod == "Cash on Delivery"){
+		$comment = strip_tags($_POST['comment']);
+		$this->Cell(40,7,'Comment: ',0,0,'L',false);
+		$this->Cell(45,7,$comment,0,0,'L',false);
+		$this->Ln();
 	}
 }
 
@@ -152,7 +165,7 @@ $pdf->SetFont('Arial','',14);
 $pdf->AddPage();
 $pdf->FancyTable();
 $pdf->paymentDetails();
-$pdf->Output('F','doc.pdf');
+$pdf->Output();//'F','doc.pdf'
 ob_end_flush();
-header('Location: cart.php');
+//header('Location: cart.php');
 ?>

@@ -138,7 +138,8 @@
 					$exp = strip_tags($_POST['exp']);
 					$cvc = strip_tags($_POST['cvc']); ?>
 					<form method = 'post' action = 'export.php' enctype="multipart/form-data">
-						
+						<input type = 'text' name = 'cart_id' value = "<?php echo $cart_id ?>" hidden>
+						<input type = 'text' name = 'pmethod' value = "Credit Card: Paypal" hidden>
 						
 						<div class="form-group input-group">
 							<div class="input-group-prepend">
@@ -187,7 +188,8 @@
 					</form>
 				<?php }else{ ?>
 					<form method = 'post' action = 'export.php' enctype="multipart/form-data">
-						
+						<input type = 'text' name = 'cart_id' value = "<?php echo $cart_id ?>" hidden>
+						<input type = 'text' name = 'pmethod' value = "Cash on Delivery" hidden>
 						<div class="form-group input-group" style="display: flex; justify-content: center">
 							<img src="" >
 						</div>
@@ -201,7 +203,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text"> Comment </span>
 							 </div>
-							<input name="name" class="form-control" type="text" placeholder = "Optional" value = "" required>
+							<input name="comment" class="form-control" type="text" placeholder = "Optional" value = "">
 						</div>
 					
 
