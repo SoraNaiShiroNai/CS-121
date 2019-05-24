@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500|Raleway:900');
+
+.navbar {
+  background-color:#433447;
+}
+
+.ctg {
+  background-color: #d16b54;
+}
+
+.title {
+  font-family: Raleway;
+  font-size: 30px;
+}
+
+a {
+  color: black;
+}
+
+
+.activeprod {
+  background-color: #f0f0f0;
+}
+
+body {
+	background-color: #e8c95d;
+}

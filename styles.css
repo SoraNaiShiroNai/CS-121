@@ -1,0 +1,51 @@
+.navbar {
+    background-color: #433447
+}
+
+.thisBody{
+    background: -webkit-linear-gradient(left, #d16b54, #433447);
+}
+#thisBody{
+    background: #e8c95d;
+}
+
+#welcomPage{
+    align: center center;
+}
+
+.thisCarousel{
+    bottom: 600px;
+    display: block;
+    top: 15px;
+	
+}
+.logoInfo{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    text-transform: uppercase;
+    font-family: ProximaNova,Helvetica,sans-serif;
+    letter-spacing: 2px;
+    color: #fff;
+}
+
+.thisImage{
+  height:440px;
+    width:862px;
+    overflow:hidden;
+}
+
+.btn-outline-success {
+    color: #fff;
+    border-color: #fff;
+}
+
+.footer {
+    padding-top: 2rem;
+    padding-bottom: 17px;
+    background-color: #433447 !important;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
