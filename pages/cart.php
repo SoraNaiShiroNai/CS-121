@@ -203,21 +203,22 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light">Continue Shopping</button>
+                    
+					<button class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;" type="button"  data-toggle="modal" data-target = "#paypal">Check Out with  <img src="https://cdnjs.cloudflare.com/ajax/libs/minicart/3.0.1/paypal_65x18.png" width="65" height="18" alt="PayPal"></button>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase">Cash on Delivery</button>
+                    <button class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;">Cash on Delivery</button>
                 </div>
             </div>
         </div>
     </div>	
 </div>
 	<div class = "col-sm-6  mx-auto" style = "width:30%;">
-		 <button class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:450px;" type="button"  data-toggle="modal" data-target = "#paypal">Check Out with  <img src="https://cdnjs.cloudflare.com/ajax/libs/minicart/3.0.1/paypal_65x18.png" width="65" height="18" alt="PayPal"></button>
+		<a href = "productpage.php" class="btn btn-block btn-light">Continue Shopping</a>
 	</div>
 	
 	<div class="modal fade" id="paypal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<form>
+	
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-header">
@@ -226,34 +227,38 @@
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
-		  <div class="modal-body">
-		  <!--THIS IS THE LOG IN FORM-->
+		  <form method = 'post' action = "export.php">
+				<div class="modal-body">
+				<input type = 'text' name = 'cart_id' value = "<?php echo $cart_id ?>" hidden>
+				<input type = 'text' name = 'pmethod' value = "pp" hidden>
 				
 				  <div class="form-group">
 					<label for="exampleInputEmail1">Credit Card Number</label>
-					<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+					<input type="text" name = "ccn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
 					<label for="exampleInputEmail1">Name of Card Holder</label>
-					<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
+					<input type="text" name = "name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
 					<label for="exampleInputEmail1">Month and Year of Expiration</label>
-					<input type="text" class="form-control" id="exampleInputEmail1">
+					<input type="text" name = "exp" class="form-control" id="exampleInputEmail1">
 					
 					<!--small details if needed<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
 				  </div>
 				  <div class="form-group">
 					<label for="exampleInputPassword1">CVC</label>
-					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter a 3 DIGIT number">
-				  </div>
+					<input type="password" name = "cvc" class="form-control" id="exampleInputPassword1" placeholder="Enter a 3 DIGIT number">
 				  </div>
 				  
-				
+				  <div class = "row">
+					<div class = "col">
+						  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						  <button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				  </div>
+				  
+		  
 			<!------------------------>
 		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		  </div>
+		  </form>
 		</div>
 	  </div>
-	  </form>
 	</div>
   </body>
