@@ -202,23 +202,18 @@
         </div>
         <div class="col mb-2">
             <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    
-					<button class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;" type="button"  data-toggle="modal" data-target = "#paypal">Check Out with  <img src="https://cdnjs.cloudflare.com/ajax/libs/minicart/3.0.1/paypal_65x18.png" width="65" height="18" alt="PayPal"></button>
-                </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                     <form method = 'post' action = "checkout1.php">
-							<div class="modal-body">
-							<input type = 'text' name = 'cart_id' value = "<?php echo $cart_id ?>" hidden>
-							<input type = 'text' name = 'pmethod' value = "Cash on Delivery" hidden>
-							
-							  <button type = 'submit' class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;">Cash on Delivery</button>
-							  
-					  
-						<!------------------------>
-					  </div>
-					  </form>
-					
+					<div class="col-sm-12  col-md-6">
+						<button class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;" type="button"  data-toggle="modal" data-target = "#paypal">Check Out with  <img src="https://cdnjs.cloudflare.com/ajax/libs/minicart/3.0.1/paypal_65x18.png" width="65" height="18" alt="PayPal"></button>
+					</div>
+					<div class="col-sm-12 col-md-6 text-right">
+						 <form method = 'post' action = "checkout1.php">
+								
+									<input type = 'text' name = 'cart_id' value = "<?php echo $cart_id ?>" hidden>
+									<input type = 'text' name = 'pmethod' value = "Cash on Delivery" hidden>
+									
+									  <button type = 'submit' class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;">Cash on Delivery</button>
+									  
+						  </form>
                 </div>
             </div>
         </div>
