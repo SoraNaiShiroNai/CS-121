@@ -137,7 +137,7 @@
 					$name = strip_tags($_POST['name']);
 					$exp = strip_tags($_POST['exp']);
 					$cvc = strip_tags($_POST['cvc']); ?>
-					<form method = 'post' action = '' enctype="multipart/form-data">
+					<form method = 'post' action = 'export.php' enctype="multipart/form-data">
 						
 						
 						<div class="form-group input-group">
@@ -186,7 +186,7 @@
 						</div> <!-- form-group// -->
 					</form>
 				<?php }else{ ?>
-					<form method = 'post' action = '' enctype="multipart/form-data">
+					<form method = 'post' action = 'export.php' enctype="multipart/form-data">
 						
 						<div class="form-group input-group" style="display: flex; justify-content: center">
 							<img src="" >
