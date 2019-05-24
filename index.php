@@ -43,6 +43,7 @@ if(isset($_POST['logout'])){
 
   <!-- Custom styles for this template -->
   <link href="assets/css/index.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
 </head>
@@ -52,7 +53,7 @@ if(isset($_POST['logout'])){
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.php"><img src="images/logowtitle.jpg" width="150px"></a>
+      <a class="navbar-brand" href="index.php"><img src="images/logowtitle.jpg" width="200px"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -119,35 +120,57 @@ if(isset($_POST['logout'])){
   </nav>
 
   <!-- Page Content -->
-  <div class="container">
+  <div class="container"><br>
+<!-- SEARCH BAR-->
+
 
     <div class="row">
 
-      <div class="col-lg-3">
-
-        <h1 class="my-4">Featured Products</h1>
-
-
+      <div class="col-lg">
+      <div class="container-fluid">
+  <img src="images/grocery(o_75).png" alt="Grocery" style="width:100%;">
+  <div class="centered">
+    <span style="background"><h2 style="color:white;">Browse for items</h2></span>
+    <form method="post" action="productpage.php">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-light" type="submit" id="button-addon2">Search</button>
+        </div>
       </div>
-      <!-- /.col-lg-3 -->
+    </form>
+  </div>
 
-      <div class="col-lg-9">
-
+</div>
+    </div>
+</div>
+<hr>
+    <div class="row">
+      <div class="container-fluid">
         <div class="row">
+        <h2>Featured Products</h2>
+    </div>
+
+      <!-- /.col-lg-3 -->
+  <div class="row">
+
 <?php
 $db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
 $stmt = $db->prepare("SELECT * FROM `item` ORDER BY 'item_id'");
 $stmt->execute();
 $results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$item_id='';
 $item_name = '';
 $item_desc = '';
 $item_price = '';
 $item_photo = '';
 $cart_id = '';
-
+$counter=0;
 foreach ($results_arr as $i => $values) {
   foreach ($values as $key => $value) {
+    if($key=="item_id")
+      $item_id =  $value;
     if($key=="item_name")
       $item_name =  $value;
     if($key=="item_desc")
@@ -157,36 +180,76 @@ foreach ($results_arr as $i => $values) {
       if($key=="item_photo")
         $item_photo =  $value;
   }
+  if($counter<3){
   print '<div class="col-lg-4 col-md-6 mb-4">
     <div class="card h-100">
-      <a href="#"><img class="card-img-top" width="400px" src="pages/uploaded_assets/'.$item_photo.'" alt=""></a>
+      <img class="card-img-top" width="400px" src="pages/uploaded_assets/'.$item_photo.'" alt="">
       <div class="card-body">
-        <h4 class="card-title">
-          <a href="#">'.$item_name.'</a>
-        </h4>
+        <h4 class="card-title">'.$item_name.'</h4>
         <h5>'.$item_price.'</h5>
         <p class="card-text">'.$item_desc.'</p>
+        <form method = "post" action = "pages/item_details.php">
+         <input type = "text" name = "toView" value = '.$item_id.' hidden>
+         <button class="btn btn-secondary btn-sm" type = "submit" name = "expandDetails">More Details</button>
+         </form>
       </div>
     </div>
-  </div>';
+  </div>';}
+  $counter++;
 }
 
 
 
  ?>
 
+</div>
+  </div>
 
         </div>
         <!-- /.row -->
-
-      </div>
-      <!-- /.col-lg-9 -->
-
-    </div>
-    <!-- /.row -->
-
+<hr>
+<div class="row">
+<div class="container">
+				<div class="row no-gutters ftco-services">
+          <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="media block-6 services p-4 py-md-5">
+              <div class="icon d-flex justify-content-center align-items-center mb-4">
+            		<img src="images/card.png" width="75px">
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Card payments</h3>
+                <p>Pay via card (paypal)</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="media block-6 services p-4 py-md-5">
+              <div class="icon d-flex justify-content-center align-items-center mb-4">
+            		<img src="images/cod.png" width="75px">
+              <div class="media-body">
+                <h3 class="heading">C.O.D.</h3>
+                <p>Cash on Delivery supported</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 text-center d-flex align-self-stretch ftco-animate fadeInUp ftco-animated">
+            <div class="media block-6 services p-4 py-md-5">
+              <div class="icon d-flex justify-content-center align-items-center mb-4">
+            		<span><img src="images/ship.png" width="75px"></span>
+              </div>
+              <div class="media-body">
+                <h3 class="heading">Delivery</h3>
+                <p>Shipping via Integrated Courier</p>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
   </div>
-  <!-- /.container -->
+</div>
+
+</div>
+  <!--  main container -->
 
   <!--LOG IN POPUP-->
 	<div class="modal fade" id="logIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -225,7 +288,7 @@ foreach ($results_arr as $i => $values) {
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			<button type="submit" name = "logIn" class="btn btn-primary" value = "Log In">
+			<button type="submit" name = "logIn" class="btn btn-primary" >Login</button>
 		  </div>
 		</div>
 	  </div>
@@ -236,15 +299,35 @@ foreach ($results_arr as $i => $values) {
 
 
   <!-- Footer -->
-  <footer class="py-5 bg-dark">
+  <footer class="py-5" id="myFooter">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+        <div class="row">
+            <div class="col-sm-4">
+                <h5>Links</h5>
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="pages/productpage.php">Products</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-4">
+                <h5>About us</h5>
+                <ul>
+                    <li><a href="aboutus.html">CMSC 121 GROUP</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-4">
+                <h5>Contact Us</h5>
+                <ul>
+                    <li><a href="contactus.html">Email</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+       <div class="container">
+            <h5 class="logo"><a href="index.php"> <img src="images/logowtitle.jpg" width="100px"> </a></h5>
+        </div>
     <!-- /.container -->
   </footer>
-
-
-
 
 
   <!-- Bootstrap core JavaScript -->
