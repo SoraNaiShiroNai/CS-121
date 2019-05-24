@@ -23,6 +23,11 @@ if(isset($_POST['logout'])){
 	//unset($_SESSION['results_arr']);
 }
 
+if(isset($_POST['search'])){
+  $_SESSION['search']=$_POST['toSearch'];
+  header("Location: pages/productpage.php");
+}
+
 
 ?>
 
@@ -63,8 +68,83 @@ if(isset($_POST['logout'])){
             <a class="nav-link" href="index.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="productspage.php">Products</a>
+            <a class="nav-link" href="pages/productpage.php">Products</a>
           </li>
+        </li>
+        <!--CART (ONLY FOR USERS)-->
+        <?php
+        if(isset($_SESSION["email"]) && $_SESSION["email"]!=$email1 && $_SESSION["email"]!=$email2 ){
+           print '<li class="nav-item"><li class="dropdown">
+                  <a href="" class="btn btn-light dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <i class="fas fa-shopping-cart"></i> VIEW CART </a>
+                  <ul class=" dropdown-menu dropdown-cart" role="menu">
+                  ';
+                                  $db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
+                                  $stmt = $db->prepare("SELECT * FROM `cart` WHERE `email`='$email'");
+                                  $stmt->execute();
+                                  $results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                  //$stmt->debugDumpParams();
+                                  //echo "<br>";
+
+                                  $cart_id ="";
+
+                                  foreach ($results_arr as $i => $values) {
+                                    foreach ($values as $key => $value) {
+                                      if($key=="cart_id")
+                                        $cart_id =  $value;
+                                    }
+                                  }
+
+                                  $db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
+                                  $stmt = $db->prepare("SELECT * FROM `cart_detail` WHERE `cart_id`= '$cart_id';");
+                                  $stmt->execute();
+
+                                  //$stmt->debugDumpParams();
+
+                                  $results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                  $item_id = '';
+                                  $quantity = '';
+
+                                  foreach ($results_arr as $i => $values) {
+                                    foreach ($values as $key => $value) {
+                                      if($key=="item_id")
+                                        $item_id =  $value;
+                                      if($key=="quantity")
+                                        $quantity =  $value;
+                                    }
+
+                                    $db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
+                                    $stmt = $db->prepare("SELECT * FROM `item` WHERE `item_id`='$item_id'");
+                                    $stmt->execute();
+                                    $results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    $item_photo = '';
+                                    $item_name = '';
+                                    $item_price = '';
+                                    $cart_id = '';
+                                    foreach ($results_arr as $i => $values) {
+                                      print "";
+                                      foreach ($values as $key => $value) {
+                                        if($key=="item_name"){
+                                          $item_name=$value;
+                                        }
+                                      }
+                                      print '<li><span class="item">
+                                        <span class="item-left">
+                                            <span class="item-info">
+                                              <span><b> '.$item_name.'<b></span><br>
+                                                <span> Quantity: '.$quantity.'</span>
+                                            </span>
+                                        </span>
+                                    </span></li><br>';
+                                    }
+                                  }
+
+                                  print'<hr>
+                                <a class="btn btn-success text-center" href="pages/cart.php">Go to Cart</a>
+                              </ul></li></li>';
+
+                                }
+        ?>
+
           <li class="nav-item">
             <?php
 
@@ -81,7 +161,9 @@ if(isset($_POST['logout'])){
                 print '<div class="px-5 dropdown">
                   <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> ADMIN</button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <a class="dropdown-item" href="pages/addItem.php">Add new item</a>
                     <form method="post" action=""><button class="dropdown-item" type="submit" name="logout">Logout</button></form>
+
                   </div>
                 </div>';
       					//echo '<form method = "post" action = ""><button class="btn btn-outline-light my-2 my-sm-0 mr-1" type="submit"  name = "logout">Logout</button></form>';
@@ -131,11 +213,11 @@ if(isset($_POST['logout'])){
   <img src="images/grocery(o_75).png" alt="Grocery" style="width:100%;">
   <div class="centered">
     <span style="background"><h2 style="color:white;">Browse for items</h2></span>
-    <form method="post" action="productpage.php">
+    <form method="post" action="">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+        <input type="text" name="toSearch" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
         <div class="input-group-append">
-          <button class="btn btn-light" type="submit" id="button-addon2">Search</button>
+          <button class="btn btn-light" type="submit" id="button-addon2" name="search">Search</button>
         </div>
       </div>
     </form>
@@ -155,6 +237,7 @@ if(isset($_POST['logout'])){
   <div class="row">
 
 <?php
+
 $db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
 $stmt = $db->prepare("SELECT * FROM `item` ORDER BY 'item_id'");
 $stmt->execute();
@@ -305,26 +388,23 @@ foreach ($results_arr as $i => $values) {
             <div class="col-sm-4">
                 <h5>Links</h5>
                 <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="pages/productpage.php">Products</a></li>
+                    <li><a href="../index.php">Home</a></li>
+                    <li><a href="productpage.php">Products</a></li>
                 </ul>
             </div>
             <div class="col-sm-4">
                 <h5>About us</h5>
                 <ul>
-                    <li><a href="aboutus.html">CMSC 121 GROUP</a></li>
+                    <li><a href="#">CMSC 121 GROUP</a></li>
                 </ul>
             </div>
             <div class="col-sm-4">
-                <h5>Contact Us</h5>
-                <ul>
-                    <li><a href="contactus.html">Email</a></li>
-                </ul>
+
             </div>
         </div>
     </div>
        <div class="container">
-            <h5 class="logo"><a href="index.php"> <img src="images/logowtitle.jpg" width="100px"> </a></h5>
+            <h5 class="logo"><a href="index.php"> <img src="../images/logowtitle.jpg" width="150px"> </a></h5>
         </div>
     <!-- /.container -->
   </footer>
