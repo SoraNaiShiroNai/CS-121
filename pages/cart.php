@@ -207,7 +207,18 @@
 					<button class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;" type="button"  data-toggle="modal" data-target = "#paypal">Check Out with  <img src="https://cdnjs.cloudflare.com/ajax/libs/minicart/3.0.1/paypal_65x18.png" width="65" height="18" alt="PayPal"></button>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;">Cash on Delivery</button>
+                     <form method = 'post' action = "checkout1.php">
+							<div class="modal-body">
+							<input type = 'text' name = 'cart_id' value = "<?php echo $cart_id ?>" hidden>
+							<input type = 'text' name = 'pmethod' value = "Cash on Delivery" hidden>
+							
+							  <button type = 'submit' class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;">Cash on Delivery</button>
+							  
+					  
+						<!------------------------>
+					  </div>
+					  </form>
+					
                 </div>
             </div>
         </div>
@@ -227,24 +238,24 @@
 			  <span aria-hidden="true">&times;</span>
 			</button>
 		  </div>
-		  <form method = 'post' action = "export.php">
+		  <form method = 'post' action = "checkout1.php">
 				<div class="modal-body">
 				<input type = 'text' name = 'cart_id' value = "<?php echo $cart_id ?>" hidden>
-				<input type = 'text' name = 'pmethod' value = "pp" hidden>
+				<input type = 'text' name = 'pmethod' value = "Credit Card: Paypal" hidden>
 				
 				  <div class="form-group">
 					<label for="exampleInputEmail1">Credit Card Number</label>
-					<input type="text" name = "ccn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+					<input type="number" name = "ccn" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="CCN" required>
 					<label for="exampleInputEmail1">Name of Card Holder</label>
-					<input type="text" name = "name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
+					<input type="text" name = "name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name" required>
 					<label for="exampleInputEmail1">Month and Year of Expiration</label>
-					<input type="text" name = "exp" class="form-control" id="exampleInputEmail1">
+					<input type="text" name = "exp" class="form-control" id="exampleInputEmail1" placeholder = "MM/YY">
 					
 					<!--small details if needed<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
 				  </div>
 				  <div class="form-group">
 					<label for="exampleInputPassword1">CVC</label>
-					<input type="password" name = "cvc" class="form-control" id="exampleInputPassword1" placeholder="Enter a 3 DIGIT number">
+					<input type="password" name = "cvc" class="form-control" id="exampleInputPassword1" placeholder="">
 				  </div>
 				  
 				  <div class = "row">
