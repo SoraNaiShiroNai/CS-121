@@ -120,7 +120,12 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"> Stock </span>
 						 </div>
-						<input name="stock" class="form-control" type="number" placeholder = "" required>
+						<select name="item_stock" class="form-control" type="number" required>
+								<option value = 'available'>Available</option>
+								<option value = 'out-of-stock'>Out-of-Stock</option>
+								<option value = 'limited'>Limited</option>
+							
+							</select>
 					</div>
 
 

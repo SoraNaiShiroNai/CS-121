@@ -157,7 +157,11 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text"> Stock </span>
 					 </div>
-					<input name="item_stock" class="form-control" type="number" required value = '<?php echo "$item_stock";?>'>
+					<select name="item_stock" class="form-control" type="number" required value = '<?php echo "$item_stock";?>'>
+						<option value = 'available' <?php if("$item_stock"=='available') echo "selected" ?>>Available</option>
+						<option value = 'out-of-stock' <?php if("$item_stock"=='out-of-stock') echo "selected" ?>>Out-of-Stock</option>
+						<option value = 'limited' <?php if("$item_stock"=='limited') echo "selected" ?>>Limited</option>
+					</select>
 				</div>
 				<div class="form-group input-group">
 					<div class="input-group-prepend">
