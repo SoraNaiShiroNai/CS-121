@@ -14,6 +14,7 @@
 					$cart_id = $value;
 			}
 		}
+	$counter;
 		
 	if(isset($_POST['updateQuantity'])){
 		$quantity = $_POST['quantity'];
@@ -125,6 +126,7 @@
 							$stmt->execute(array($cart_id));
 							$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							
+							$counter = 0;
 							
 							foreach ($results_arr as $i => $values) {
 								foreach ($values as $key => $value) {
@@ -145,8 +147,10 @@
 											$item_name = $value;
 										if($key=="item_price")
 											$item_price = $value;
-										if($key=="stock")
+										if($key=="stock"){
 											$stock = $value;
+											if($stock=='out-of-stock') $counter++;
+										}
 									}
 								}
 								//end of inner SQL
@@ -201,6 +205,7 @@
             </div>
         </div>
         <div class="col mb-2">
+			<?php if($counter==0){ ?>
             <div class="row">
 					<div class="col-sm-12  col-md-6">
 						<button class="btn btn-success my-2 my-sm-0 mr-1 text-uppercase mx-auto" style = "width:80%;" type="button"  data-toggle="modal" data-target = "#paypal">Check Out with  <img src="https://cdnjs.cloudflare.com/ajax/libs/minicart/3.0.1/paypal_65x18.png" width="65" height="18" alt="PayPal"></button>
@@ -216,6 +221,11 @@
 						  </form>
                 </div>
             </div>
+			<?php }else{ ?>
+				<br>
+				<h3 class="jumbotron-heading">Some item(s) on your cart is/are unavailable. Please re-check to continue.</h3>
+			
+			<?php } ?>
         </div>
     </div>	
 </div>
