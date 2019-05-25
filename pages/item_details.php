@@ -1,6 +1,6 @@
 <?php
 
-	$item_id = $_POST['toView'];
+	$item_id = $_GET['id'];
 	$item_name = "";
 	$item_desc = "";
 	$item_price = "";
