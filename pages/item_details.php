@@ -1,6 +1,9 @@
 <?php
 
 	session_start();
+	$email = "";
+	if(isset($_SESSION['email']))
+		$email = $_SESSION['email'];
 	$item_id = $_GET['id'];
 	$item_name = "";
 	$item_desc = "";
@@ -29,17 +32,15 @@
 		}
 	}
 	
-	if(isset($_GET['add2cart'])){
-
-	$item_id = $_GET['toCart'];
+	if(isset($_POST['add2cart'])){
 
 	$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
 	$stmt = $db->prepare("SELECT * FROM `item` WHERE `item_id`='$item_id'");
 	$stmt->execute();
 	$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-	$item_id = $_GET['toCart'];
-	$quantity = $_GET['quantity'];
+	$item_id = $_POST['toCart'];
+	$quantity = $_POST['quantity'];
 	$item_name = '';
 	$item_desc = '';
 	$item_price = '';
@@ -98,7 +99,7 @@
 		$stmt->execute();
 	}
 
-
+	header('Location: cart.php');
 
 
 }
@@ -167,7 +168,7 @@
 				<a class="pt-0" href="#"><a href="../index.php"><img src="../images/logowtitle.jpg" style="width:200px; height: 50px;"></a>
 			  </li>
 			</ul>
-			  <button class="btn btn-outline-success my-2 my-sm-0 mr-1" type="button"  data-toggle="modal" data-target = "#logIn">Log In</button>
+			  
 		  </div>
 	</nav>
 
@@ -183,11 +184,13 @@
 				<h6 class="card-title mt-3 text-center">Stock: <?php echo "$item_stock";?></h6>
 				<h6 class="card-title mt-3 text-center">Price: <?php echo "$item_price";?></h6>
 			<div style = "display: flex;">
-				<form method = 'get' action = '' class = 'table'>
+			<?php if(isset($_SESSION['email'])){ ?>
+				<form method = 'post' action = '' class = 'table'>
 					<input type = 'text' name = 'toCart' value = '<?php echo $item_id ?>' hidden>
 					<input type = 'number' name = 'quantity' value = '1' style = 'width: 35px'>
 					<button class='btn btn-secondary btn-sm' type = 'submit' name = 'add2cart'>Add to Cart</button>
 				</form>
+			<?php } ?>
 			</div>
 					<div class="form-group">
 						<a href = "productpage.php"><button type="submit" class="btn btn-primary btn-block" name = "editItem">Back</button></a>

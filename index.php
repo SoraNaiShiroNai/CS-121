@@ -264,17 +264,13 @@ foreach ($results_arr as $i => $values) {
         $item_photo =  $value;
   }
   if($counter<3){
-  print '<div class="col-lg-4 col-md-6 mb-4">
+  echo '<div class="col-lg-4 col-md-6 mb-4">
     <div class="card h-100">
-      <img class="card-img-top" width="400px" src="pages/uploaded_assets/'.$item_photo.'" alt="">
+      <img class="card-img-top" width="400px" src="pages/uploaded_assets/'.$item_photo.'" alt="" style = "max-height: 300px; width: auto;">
       <div class="card-body">
-        <h4 class="card-title">'.$item_name.'</h4>
+        <a href = "pages/item_details.php?id='.$item_id.'"><h4 class="card-title">'.$item_name.'</h4></a>
         <h5>'.$item_price.'</h5>
         <p class="card-text">'.$item_desc.'</p>
-        <form method = "post" action = "pages/item_details.php">
-         <input type = "text" name = "toView" value = '.$item_id.' hidden>
-         <button class="btn btn-secondary btn-sm" type = "submit" name = "expandDetails">More Details</button>
-         </form>
       </div>
     </div>
   </div>';}

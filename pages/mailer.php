@@ -25,4 +25,12 @@ $mail->AltBody = 'Unknown error';
 $mail->Body = 'Here is a PDF of your recent purchases.';
 $mail->addAttachment("doc.pdf", "Invoice");
 $mail->send();
+$db = new PDO ('mysql:host = localhost; dbname=cs 121 grocery shop', 'root', '');
+$query = $db->prepare("SELECT * FROM cart where email=?");
+$query->bindparam(1,$email);
+$query->execute();
+$result = $query->fetch();
+$query = $db->prepare("DELETE FROM cart_detail WHERE cart_id=?");
+$query->bindparam(1,$result['cart_id']);
+$query->execute();
 ?>

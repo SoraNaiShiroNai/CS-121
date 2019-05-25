@@ -193,7 +193,7 @@ if(isset($_GET['add2cart'])){
                         							$stmt = $db->prepare("SELECT * FROM `item` WHERE `item_id`='$item_id'");
                         							$stmt->execute();
                         							$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                      $item_photo = '';
+													$item_photo = '';
                         							$item_name = '';
                         							$item_price = '';
                         							$cart_id = '';
@@ -356,7 +356,6 @@ else {
           <h5>'.$item_price.'</h5>
           <p class="card-text">'.$item_desc.'</p>';
   //---BUTTONS---
-  //ADMIN
   if(isset($_SESSION['email'])){
     if($_SESSION['email']==$email1 || $_SESSION['email']==$email2){
             print "
