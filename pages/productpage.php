@@ -323,7 +323,7 @@ else {
   $searchHolder="";
 }
   $db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
-  $stmt = $db->prepare("SELECT * FROM `item` WHERE `item_name`LIKE'%$searchHolder%' OR `item_desc` LIKE '%$searchHolder%' OR `item_price` LIKE '%$searchHolder%';");
+  $stmt = $db->prepare("SELECT * FROM `item` WHERE `item_name`LIKE'%$searchHolder%' OR `item_desc` LIKE '%$searchHolder%' OR `item_price` LIKE '%$searchHolder%' ORDER BY `item_id` DESC;");
   $stmt->execute();
   $results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
