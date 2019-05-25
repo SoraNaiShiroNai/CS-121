@@ -1,6 +1,10 @@
 <?php
 
 	session_start();
+	$password1 = '47130110150220053410';
+	$email1 = 'sora@disboard.com';
+	$password2 = 'kuroyukihime';
+	$email2 = 'shiro@disboard.com';
 	$email = "";
 	if(isset($_SESSION['email']))
 		$email = $_SESSION['email'];
@@ -184,13 +188,14 @@
 				<h6 class="card-title mt-3 text-center">Stock: <?php echo "$item_stock";?></h6>
 				<h6 class="card-title mt-3 text-center">Price: <?php echo "$item_price";?></h6>
 			<div style = "display: flex;">
-			<?php if(isset($_SESSION['email'])){ ?>
-				<form method = 'post' action = '' class = 'table'>
-					<input type = 'text' name = 'toCart' value = '<?php echo $item_id ?>' hidden>
-					<input type = 'number' name = 'quantity' value = '1' style = 'width: 35px'>
-					<button class='btn btn-secondary btn-sm' type = 'submit' name = 'add2cart'>Add to Cart</button>
-				</form>
-			<?php } ?>
+			<?php if(isset($_SESSION['email'])){ 
+						if($_SESSION['email']!=$email1 && $_SESSION['email']!=$email2){?>
+						<form method = 'post' action = '' class = 'table'>
+							<input type = 'text' name = 'toCart' value = '<?php echo $item_id ?>' hidden>
+							<input type = 'number' name = 'quantity' value = '1' style = 'width: 35px'>
+							<button class='btn btn-secondary btn-sm' type = 'submit' name = 'add2cart'>Add to Cart</button>
+						</form>
+			<?php }	} ?>
 			</div>
 					<div class="form-group">
 						<a href = "productpage.php"><button type="submit" class="btn btn-primary btn-block" name = "editItem">Back</button></a>

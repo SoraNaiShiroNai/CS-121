@@ -328,7 +328,7 @@ foreach ($results_arr as $i => $values) {
         </div>
     </div>
        <div class="container">
-            <h5 class="logo"><a href="index.php"> <img src="../images/logowtitle.jpg" width="150px"> </a></h5>
+            <h5 class="logo"><a href="index.php"> <img src="images/logowtitle.jpg" width="150px"> </a></h5>
         </div>
     <!-- /.container -->
   </footer>
