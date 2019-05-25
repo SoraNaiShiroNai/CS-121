@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2019 at 11:00 AM
+-- Generation Time: May 25, 2019 at 10:03 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -38,9 +38,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `email`) VALUES
-(2, 'flonne@disgaea.com'),
-(4, 'sora@disboard.com'),
-(3, 'wobo@gm.com');
+(1, '7laharl@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -53,14 +51,6 @@ CREATE TABLE `cart_detail` (
   `item_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `cart_detail`
---
-
-INSERT INTO `cart_detail` (`cart_id`, `item_id`, `quantity`) VALUES
-(2, 2, 10),
-(2, 5, 51);
 
 -- --------------------------------------------------------
 
@@ -75,7 +65,7 @@ CREATE TABLE `item` (
   `item_desc` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `item_price` float(16,2) NOT NULL,
   `item_photo` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `stock` int(9) NOT NULL DEFAULT '0'
+  `stock` enum('available','limited','out-of-stock') COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -83,8 +73,18 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`item_id`, `item_category_id`, `item_name`, `item_desc`, `item_price`, `item_photo`, `stock`) VALUES
-(2, 0, 'Jufran Ketchup', 'Sweet Chili Ketchup Sauce from fresh Bell Peppers', 80.00, 'tsuujou-kougeki.jpg', 4),
-(5, 0, 'Cream-O', 'Limited Edition Vanilla Cream-Filled Chocolate Sandwich Cookies', 65.00, '52011404_1022763154576037_1099149974349807616_n.jpg', 0);
+(3, 0, 'Rebisco Choco Crackers', 'Cream-filled chocolate cracker sandwich.', 8.00, 'item1.jpg', 'available'),
+(4, 0, 'Hansel', 'Cream-filled Biscuit', 7.00, 'httpsshop.smmarkets.phmediawysiwygproducts2020125001_-_rebisco_hansel_biscuit_choco_10s.png', 'available'),
+(5, 0, 'Marie Time', 'Thin Original Flavoured Biscuits', 7.00, 'hansel.jpg', 'available'),
+(6, 0, 'Rebisco Superthin', 'Crunchy Choco Flavoured Crackers', 6.00, 'superthin.jpg', 'available'),
+(7, 0, 'Pringles', 'Original Salted Potato Chips', 80.00, '5954b954deaf2c03413be345.png', 'available'),
+(8, 0, 'Lays Potato Chips', 'Original Salted Potato Chips', 50.00, 'item3.jpg', 'available'),
+(9, 0, 'VCut Potato Chips', 'JackNJill Cheese Flavoured Potato Crisps', 40.00, 'jack-n-jill-vcut-spicy-barbecue-60g-p78-1916_image.jpg', 'available'),
+(11, 0, 'Piattos', 'JackNJill Cheese Flavoured Potato Crisps', 12.00, 'download.jpg', 'available'),
+(12, 0, 'Coke Zero', 'Coke Zero 12 oz', 24.00, '212123123.jpg', 'limited'),
+(13, 0, 'Sprite', 'Sparkling Lemon Lime Drink', 28.00, 'sprite.jpg', 'available'),
+(14, 0, 'Royal', 'Tru-Orange Drink', 28.00, 'royal.jpg', 'available'),
+(15, 0, 'Mountain Dew', 'Citrus Blast Drink', 28.00, 'mountaindew.jpg', 'available');
 
 -- --------------------------------------------------------
 
@@ -122,7 +122,7 @@ CREATE TABLE `user` (
   `surname` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `default_address` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone_number` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
+  `password` varchar(535) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -130,9 +130,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`email`, `firstname`, `surname`, `default_address`, `phone_number`, `password`) VALUES
-('flonne@disgaea.com', 'Flonne', 'Yuuki', 'disboard', '660123123', 'laharl'),
-('sora@disboard.com', 'Sora', 'Nai', 'Senjougahara', '2981723', 'shiro'),
-('wobo@gm.com', 'Walter', 'Mart', 'BASD', '213123', 'helvette');
+('7laharl@gmail.com', 'Flonne', 'Yuuki', 'Disboard', '772391931', '12639fc17c915e5441a7b09aa6b65e1b');
 
 --
 -- Indexes for dumped tables
@@ -187,13 +185,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `order`

@@ -126,6 +126,13 @@
 							$stmt->execute(array($cart_id));
 							$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							
+							if($stmt->rowCount() == 0){
+								?> 	<script> 
+										alert("CART IS EMPTY"); 
+									</script> <?php
+								header('location: productpage.php');
+							}
+							
 							$counter = 0;
 							
 							foreach ($results_arr as $i => $values) {

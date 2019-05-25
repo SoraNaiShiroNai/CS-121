@@ -4,7 +4,7 @@
 	$default_address = strip_tags($_POST['default_address']);
 	$email = strip_tags($_POST['email']);
 	$phone_number = strip_tags($_POST['phone_number']);
-	$password1 = strip_tags($_POST['password1']);
+	$password1 = md5(strip_tags($_POST['password1']));
 
 	$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
 	$stmt = $db->prepare("INSERT INTO `user` (`firstname`, `surname`, `default_address`, `email`, `phone_number`, `password`) VALUES ('$firstname', '$surname', '$default_address', '$email', '$phone_number', '$password1');");

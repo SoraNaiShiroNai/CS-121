@@ -13,7 +13,7 @@
 		
 		$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
 		$stmt = $db->prepare('SELECT firstname, surname FROM user WHERE email=? AND password=?');
-		$stmt->execute(array($email, $password));
+		$stmt->execute(array($email, md5($password)));
 		$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
 		$_SESSION['checker'] = $results_arr;

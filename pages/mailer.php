@@ -34,3 +34,12 @@ $query = $db->prepare("DELETE FROM cart_detail WHERE cart_id=?");
 $query->bindparam(1,$result['cart_id']);
 $query->execute();
 ?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			window.location.replace("productpage.php");
+		</script>
+	</head>
+</html>
