@@ -1,5 +1,6 @@
 <?php
 
+	session_start();
 	$item_id = $_GET['id'];
 	$item_name = "";
 	$item_desc = "";
@@ -27,6 +28,80 @@
 				$item_stock = $value;
 		}
 	}
+	
+	if(isset($_GET['add2cart'])){
+
+	$item_id = $_GET['toCart'];
+
+	$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
+	$stmt = $db->prepare("SELECT * FROM `item` WHERE `item_id`='$item_id'");
+	$stmt->execute();
+	$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	$item_id = $_GET['toCart'];
+	$quantity = $_GET['quantity'];
+	$item_name = '';
+	$item_desc = '';
+	$item_price = '';
+	$item_photo = "";
+	$cart_id = '';
+
+	foreach ($results_arr as $i => $values) {
+		foreach ($values as $key => $value) {
+			if($key=="item_name")
+				$item_name =  $value;
+			if($key=="item_desc")
+				$item_desc =  $value;
+			if($key=="item_price")
+				$item_price =  $value;
+
+		}
+	}
+
+
+
+	$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
+	$stmt = $db->prepare("SELECT * FROM `cart` WHERE `email`='$email'");
+	$stmt->execute();
+	$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	//$stmt->debugDumpParams();
+	//echo "<br>";
+
+	foreach ($results_arr as $i => $values) {
+		foreach ($values as $key => $value) {
+			if($key=="cart_id")
+				$cart_id =  $value;
+		}
+	}
+
+	
+	$stmt = $db->prepare("SELECT * FROM `cart_detail` WHERE `item_id`='$item_id' AND `cart_id` = '$cart_id'");
+	$stmt->execute();
+	$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+	foreach ($results_arr as $i => $values) {
+		foreach ($values as $key => $value) {
+			if($key=="quantity")
+				$quantity2 =  $value;
+		}
+	}
+	
+	if($stmt->rowCount() == 0){
+		$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
+		$stmt = $db->prepare("INSERT INTO `cart_detail` (`cart_id`, `item_id`, `quantity`) VALUES ('$cart_id', '$item_id', '$quantity');");
+		$stmt->execute();
+	}
+	else{
+		$newQuantity = $quantity + $quantity2;
+		$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
+		$stmt = $db->prepare("UPDATE cart_detail SET quantity = '$newQuantity' WHERE `item_id`='$item_id' AND `cart_id` = '$cart_id'");
+		$stmt->execute();
+	}
+
+
+
+
+}
 
 ?>
 
@@ -99,18 +174,25 @@
 
 	<div class="card bg1-light">
 		<article class="card-body mx-auto" style="max-width: 400px;">
-			<h4 class="card-title mt-3 text-center">Name: <?php echo "$item_name";?></h4>
+			
+				<h4 class="card-title mt-3 text-center">Name: <?php echo "$item_name";?></h4>
 
-			<img src='<?php echo "uploaded_assets/".$item_photo?>'>
+				<img src='<?php echo "uploaded_assets/".$item_photo?>'>
 
-			<h6 class="card-title mt-3 text-center">Description: <?php echo "$item_desc";?></h6>
-			<h6 class="card-title mt-3 text-center">Stock: <?php echo "$item_stock";?></h6>
-			<h6 class="card-title mt-3 text-center">Price: <?php echo "$item_price";?></h6>
-
-				<div class="form-group">
-					<a href = "productpage.php"><button type="submit" class="btn btn-primary btn-block" name = "editItem">Back</button></a>
-				</div>
-
+				<h6 class="card-title mt-3 text-center">Description: <?php echo "$item_desc";?></h6>
+				<h6 class="card-title mt-3 text-center">Stock: <?php echo "$item_stock";?></h6>
+				<h6 class="card-title mt-3 text-center">Price: <?php echo "$item_price";?></h6>
+			<div style = "display: flex;">
+				<form method = 'get' action = '' class = 'table'>
+					<input type = 'text' name = 'toCart' value = '<?php echo $item_id ?>' hidden>
+					<input type = 'number' name = 'quantity' value = '1' style = 'width: 35px'>
+					<button class='btn btn-secondary btn-sm' type = 'submit' name = 'add2cart'>Add to Cart</button>
+				</form>
+			</div>
+					<div class="form-group">
+						<a href = "productpage.php"><button type="submit" class="btn btn-primary btn-block" name = "editItem">Back</button></a>
+					</div>
+			
 		</article>
 	</div>
 

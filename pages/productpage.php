@@ -78,11 +78,29 @@ if(isset($_GET['add2cart'])){
 		}
 	}
 
-	$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
-	$stmt = $db->prepare("INSERT INTO `cart_detail` (`cart_id`, `item_id`, `quantity`) VALUES ('$cart_id', '$item_id', '$quantity');");
+	
+	$stmt = $db->prepare("SELECT * FROM `cart_detail` WHERE `item_id`='$item_id' AND `cart_id` = '$cart_id'");
 	$stmt->execute();
-
-	//$stmt->debugDumpParams();
+	$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+	foreach ($results_arr as $i => $values) {
+		foreach ($values as $key => $value) {
+			if($key=="quantity")
+				$quantity2 =  $value;
+		}
+	}
+	
+	if($stmt->rowCount() == 0){
+		$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
+		$stmt = $db->prepare("INSERT INTO `cart_detail` (`cart_id`, `item_id`, `quantity`) VALUES ('$cart_id', '$item_id', '$quantity');");
+		$stmt->execute();
+	}
+	else{
+		$newQuantity = $quantity + $quantity2;
+		$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
+		$stmt = $db->prepare("UPDATE cart_detail SET quantity = '$newQuantity' WHERE `item_id`='$item_id' AND `cart_id` = '$cart_id'");
+		$stmt->execute();
+	}
 
 
 
@@ -186,11 +204,11 @@ if(isset($_GET['add2cart'])){
                         										$item_name=$value;
                         									}
                         								}
-                        								print '<li><span class="item">
+                        								print '<li><span class="item" >
                                           <span class="item-left">
                                               <span class="item-info">
-                                                <span><b> '.$item_name.'<b></span><br>
-                                                  <span> Quantity: '.$quantity.'</span>
+                                                <span  style = "padding-left: 20px"><b> '.$item_name.'<b></span><br>
+                                                  <span  style = "padding-left: 20px"> Quantity: '.$quantity.'</span>
                                               </span>
                                           </span>
                                       </span></li><br>';
@@ -198,7 +216,7 @@ if(isset($_GET['add2cart'])){
                         						}
 
                                     print'<hr>
-                                  <a class="btn btn-success text-center" href="cart.php">Go to Cart</a>
+                                  <a  style = "margin-left: 20px" class="btn btn-success text-center" href="cart.php">Go to Cart</a>
                                 </ul></li></li>';
 
                         					}
@@ -330,41 +348,36 @@ else {
     if ($counter%4==0){
       print '<div class="row">';
     }
-    echo '<div class="col-lg-3 col-md-8 mb-3">
+    print '<div class="col-lg-3 col-md-8 mb-3">
       <div class="card h-100">
-        <img class="card-img-top" width="400px" src="uploaded_assets/'.$item_photo.'" alt="">
+        <img class="card-img-top" width="400px" src="uploaded_assets/'.$item_photo.'" alt="" style = "max-height: 300px; width: auto;">
         <div class="card-body">
-          <a style = "font-size: 140%; "href = "item_details.php?id='.$item_id.'"<h4 class="card-title">'.$item_name.'</h4></a>
+          <a style = "font-size: 22px" href = "item_details.php?id='.$item_id.'"<h4 class="card-title">'.$item_name.'</h4></a>
           <h5>'.$item_price.'</h5>
           <p class="card-text">'.$item_desc.'</p>';
   //---BUTTONS---
   //ADMIN
   if(isset($_SESSION['email'])){
     if($_SESSION['email']==$email1 || $_SESSION['email']==$email2){
-            echo "
+            print "
 			<div class = 'row'>
-				<div class = 'col' style = 'display: flex; flex-wrap: nowrap;' >
-					  <form method = 'post' action = 'editItem.php'>
-					  <input type = 'text' name = 'toUpdate' value = '$item_id' hidden>
-					  <input value = 'Update' class='btn btn-secondary btn-sm ' style = 'width: 150%' type = 'submit'>
-					  </form>
+				<div class = 'col' >
+				  <form method = 'post' action = 'editItem.php'>
+				  <input type = 'text' name = 'toUpdate' value = '$item_id' hidden>
+				  <input style = 'width: 100%' value = 'Update' class='btn btn-secondary btn-sm' type = 'submit'>
+				  </form>
 				</div>
 				<div class = 'col'>
-					  <form method = 'post' action = 'deleteItem.php'>
-					  <input type = 'text' name = 'toDelete' value = '$item_id' hidden>
-					  <button class='btn btn-secondary btn-sm' type = 'submit' name = 'delete'>Delete</button>
-					  </form>
+				  <form method = 'post' action = 'deleteItem.php'>
+				  <input type = 'text' name = 'toDelete' value = '$item_id' hidden>
+				  <button style = 'width: 100%' class='btn btn-secondary btn-sm' type = 'submit' name = 'delete'>Delete</button>
+				  </form>
 				</div>
 			</div>";
           }
           //LOGGED IN USER
             else {
             print  "
-                <form method = 'post' action = 'item_details.php'>
-                 <input type = 'text' name = 'toView' value = '$item_id' hidden>
-                 <button class='btn btn-secondary btn-sm' type = 'submit' name = 'expandDetails'>More Details</button>
-                 </form>
-
                  <form method = 'get' action = ''>
                  <input type = 'text' name = 'toCart' value = '$item_id' hidden>
                  <input type = 'number' name = 'quantity' value = '1' style = 'width: 35px'>
@@ -374,13 +387,6 @@ else {
 
             }
       }
-  //NOT LOGGED IN/NO ACCOUNT
-    else  {
-      print "<form method = 'post' action = 'item_details.php'>
-      <input type = 'text' name = 'toView' value = '$item_id' hidden>
-      <button class='btn btn-secondary btn-sm' type = 'submit' name = 'expandDetails'>More Details</button>
-      </form>";
-    }
 
 
 print" </div></div></div>";

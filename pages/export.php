@@ -165,7 +165,7 @@ $pdf->SetFont('Arial','',14);
 $pdf->AddPage();
 $pdf->FancyTable();
 $pdf->paymentDetails();
-$pdf->Output();//'F','doc.pdf'
+$pdf->Output('F','doc.pdf');//
 ob_end_flush();
-//header('Location: cart.php');
+header('Location: mailer.php');
 ?>
