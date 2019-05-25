@@ -193,7 +193,7 @@
 						<form method = 'post' action = '' class = 'table'>
 							<input type = 'text' name = 'toCart' value = '<?php echo $item_id ?>' hidden>
 							<input type = 'number' name = 'quantity' value = '1' style = 'width: 35px'>
-							<button class='btn btn-secondary btn-sm' type = 'submit' name = 'add2cart'>Add to Cart</button>
+							<button class='btn btn-secondary btn-sm mx-auto' type = 'submit' style = "width: 89%;" name = 'add2cart'>Add to Cart</button>
 						</form>
 			<?php }	} ?>
 			</div>

@@ -9,17 +9,17 @@
 		$item_name = strip_tags($_POST['item_name']);
 	 	$item_desc = strip_tags($_POST['item_desc']);
 	  $item_price = strip_tags($_POST['item_price']);
-	  $stock = strip_tags($_POST['stock']);
+	  $stock = strip_tags($_POST['item_stock']);
 	  $item_photo = strip_tags($_FILES['uploaded_file']['name']);
 	  $db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
 	  $stmt = $db->prepare("INSERT INTO `item` (`item_name`, `item_desc`, `item_price`, `item_photo`, `stock`) VALUES ('$item_name', '$item_desc', '$item_price', '$item_photo', '$stock');");
 	  $stmt->execute();
 		move_uploaded_file($_FILES["uploaded_file"]["tmp_name"], $target_file);
 
+	//$stmt->debugDumpParams();
 
 
-
-		header("Location: productpage.php");
+	header("Location: productpage.php");
 	}
 }
 
@@ -120,7 +120,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"> Stock </span>
 						 </div>
-						<select name="item_stock" class="form-control" type="number" required>
+						<select name="item_stock" class="form-control" required>
 								<option value = 'available'>Available</option>
 								<option value = 'out-of-stock'>Out-of-Stock</option>
 								<option value = 'limited'>Limited</option>
