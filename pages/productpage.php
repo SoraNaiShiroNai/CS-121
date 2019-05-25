@@ -78,18 +78,18 @@ if(isset($_GET['add2cart'])){
 		}
 	}
 
-	
+
 	$stmt = $db->prepare("SELECT * FROM `cart_detail` WHERE `item_id`='$item_id' AND `cart_id` = '$cart_id'");
 	$stmt->execute();
 	$results_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	
+
 	foreach ($results_arr as $i => $values) {
 		foreach ($values as $key => $value) {
 			if($key=="quantity")
 				$quantity2 =  $value;
 		}
 	}
-	
+
 	if($stmt->rowCount() == 0){
 		$db = new PDO('mysql:host=localhost;dbname=cs 121 grocery shop','root','');
 		$stmt = $db->prepare("INSERT INTO `cart_detail` (`cart_id`, `item_id`, `quantity`) VALUES ('$cart_id', '$item_id', '$quantity');");
@@ -307,8 +307,10 @@ if(isset($_GET['add2cart'])){
 <hr>
     <div class="row">
       <div class="container-fluid">
-        <div class="row">
-        <h2>Products</h2></div>
+        <div class="row"><div class="col-lg-2">
+        <h2>Products </h2></div>
+        <div class="col-lg-4">
+         <button class="thanos btn btn-light" ><img src="../images/gauntlet.png" width="50px"><span id="text">Snap!</span></button></div></div>
         <?php if(isset($_SESSION['search'])){
           print'<div class="row"><h5>Search Results:</h5></div>'; } ?>
 
@@ -348,8 +350,11 @@ else {
     if ($counter%4==0){
       print '<div class="row">';
     }
-    print '<div class="col-lg-3 col-md-8 mb-3">
-      <div class="card h-100">
+    if($counter%2==0)
+    print '<div class="snap col-lg-3 col-md-8 mb-3">';
+    else
+    print '<div class="col-lg-3 col-md-8 mb-3">';
+    print '  <div class="card h-100">
         <img class="card-img-top" width="400px" src="uploaded_assets/'.$item_photo.'" alt="" style = "max-height: 300px; width: auto;">
         <div class="card-body">
           <a style = "font-size: 22px" href = "item_details.php?id='.$item_id.'"<h4 class="card-title">'.$item_name.'</h4></a>
@@ -488,6 +493,21 @@ print" </div></div></div>";
   <!-- Bootstrap core JavaScript -->
   <script src="../assets/jquery/jquery.min.js"></script>
   <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  $( document ).ready(function() {
+      $(".thanos").click(function(){
+        if($(".snap").is(":visible")){
+        $(".snap").fadeOut(4500);
+        $("#text").html('Reverse Snap!');
+      }
+      else {
+        $(".snap").fadeIn(1000);
+        $("#text").html('Snap!');
+      }
+      });
+  });
+  </script>
 
 </body>
 
