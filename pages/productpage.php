@@ -330,32 +330,32 @@ else {
     if ($counter%4==0){
       print '<div class="row">';
     }
-    print '<div class="col-lg-3 col-md-8 mb-3">
+    echo '<div class="col-lg-3 col-md-8 mb-3">
       <div class="card h-100">
         <img class="card-img-top" width="400px" src="uploaded_assets/'.$item_photo.'" alt="">
         <div class="card-body">
-          <h4 class="card-title">'.$item_name.'</h4>
+          <a style = "font-size: 140%; "href = "item_details.php?id='.$item_id.'"<h4 class="card-title">'.$item_name.'</h4></a>
           <h5>'.$item_price.'</h5>
           <p class="card-text">'.$item_desc.'</p>';
   //---BUTTONS---
   //ADMIN
   if(isset($_SESSION['email'])){
     if($_SESSION['email']==$email1 || $_SESSION['email']==$email2){
-            print "
-              <form method = 'post' action = 'editItem.php'>
-              <input type = 'text' name = 'toUpdate' value = '$item_id' hidden>
-              <input value = 'Update' class='btn btn-secondary btn-sm' type = 'submit'>
-              </form>
-
-              <form method = 'post' action = 'deleteItem.php'>
-              <input type = 'text' name = 'toDelete' value = '$item_id' hidden>
-              <button class='btn btn-secondary btn-sm' type = 'submit' name = 'delete'>Delete</button>
-              </form>
-
-              <form method = 'post' action = 'item_details.php'>
-              <input type = 'text' name = 'toView' value = '$item_id' hidden>
-              <button class='btn btn-secondary btn-sm' type = 'submit' name = 'expandDetails'>More Details</button>
-              </form>";
+            echo "
+			<div class = 'row'>
+				<div class = 'col' style = 'display: flex; flex-wrap: nowrap;' >
+					  <form method = 'post' action = 'editItem.php'>
+					  <input type = 'text' name = 'toUpdate' value = '$item_id' hidden>
+					  <input value = 'Update' class='btn btn-secondary btn-sm ' style = 'width: 150%' type = 'submit'>
+					  </form>
+				</div>
+				<div class = 'col'>
+					  <form method = 'post' action = 'deleteItem.php'>
+					  <input type = 'text' name = 'toDelete' value = '$item_id' hidden>
+					  <button class='btn btn-secondary btn-sm' type = 'submit' name = 'delete'>Delete</button>
+					  </form>
+				</div>
+			</div>";
           }
           //LOGGED IN USER
             else {
